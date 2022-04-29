@@ -1,43 +1,38 @@
 const settings = {
-  "name": "bibli-frontity",
+  "name": "bibliotheque",
   "state": {
     "frontity": {
-      "url": "https://test.frontity.org",
-      "title": "Test Frontity Blog",
-      "description": "WordPress installation for Frontity development"
+      "url": "http://localhost/bibliotheque",
+      "title": "Bibliothèque en ligne",
+      "description": "Une plateforme pour les passionnés de lecture"
     }
   },
   "packages": [
     {
-      "name": "@frontity/mars-theme",
+      "name": "bibli-theme",
       "state": {
+        "frontity": {
+          "hover": false,
+      },
         "theme": {
           "menu": [
             [
-              "Home",
+              "Acceuil",
               "/"
             ],
             [
-              "Nature",
-              "/category/nature/"
+              "Livres",
+              "/livres/"
             ],
             [
-              "Travel",
-              "/category/travel/"
+              "DVD",
+              "/dvds/"
             ],
             [
-              "Japan",
-              "/tag/japan/"
+              "CD",
+              "/cds/"
             ],
-            [
-              "About Us",
-              "/about-us/"
-            ]
-          ],
-          "featured": {
-            "showOnList": false,
-            "showOnPost": false
-          }
+          ]
         }
       }
     },
@@ -45,8 +40,59 @@ const settings = {
       "name": "@frontity/wp-source",
       "state": {
         "source": {
-          "url": "https://test.frontity.org"
-        }
+          "api": "http://localhost/bibliotheque/wp-json",
+          "postTypes": [
+            {
+              type: 'livre',
+              endpoint: 'livre',
+              archive: "/livres"
+            },
+            {
+              type: 'livre',
+              endpoint: 'livre',
+              archive: "/livre"
+            },
+            {
+              type: 'cd',
+              endpoint: 'cd',
+              archive: "/cds"
+            },
+            {
+              type: 'dvd',
+              endpoint: 'dvd',
+              archive: "/dvds"
+            }
+          ],
+          "taxonomies" : [
+            {
+              taxonomy : "genre",
+              endpoint: "genre",
+              postTypeEndpoint: 'livre',
+              params : {
+                per_page: 5,
+                _embed : true
+              }
+            },
+            {
+              taxonomy : "style",
+              endpoint: "style",
+              postTypeEndpoint: 'cd',
+              params : {
+                per_page: 5,
+                _embed : true
+              }
+            },
+            {
+              taxonomy : "categorie",
+              endpoint: "categorie",
+              postTypeEndpoint: 'dvd',
+              params : {
+                per_page: 5,
+                _embed : true
+              }
+            }
+          ]
+        },
       }
     },
     "@frontity/tiny-router",
@@ -55,3 +101,4 @@ const settings = {
 };
 
 export default settings;
+
