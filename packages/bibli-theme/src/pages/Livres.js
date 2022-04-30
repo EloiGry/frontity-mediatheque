@@ -9,6 +9,7 @@ import BoxHover from '../components/BoxHover';
 import {useState} from 'react'
 import { motion } from "framer-motion"
 import Input from '../components/Input';
+import Footer from '../components/Footer';
 
 
 const containerVariants = {
@@ -46,37 +47,72 @@ const Livres = ({state, libraries}) => {
     )
 
     return (
-        <Container 
-            as={motion.div}
-            variants={containerVariants}
-            initial='initial'
-            animate='animate'
-        >
-            <h2> 
-                    Nos livres 
-            </h2>
+        <>
+        
+            <Container 
+                as={motion.div}
+                variants={containerVariants}
+                initial='initial'
+                animate='animate'
+            >
+                <h2> 
+                        Nos livres 
+                </h2>
 
-            <BarFilter >
-                <Input
-                    type='text'
-                    placeholder="Cherchez un livre ou un auteur &#128270;"
-                    value= {textInput}
-                    onChange= {e => {setTextInput(e.target.value)}}
-                />
-                <select value={textSelect} onChange={e => {setTextSelect(e.target.value)}} style={{borderRadius: '30px', cursor: 'pointer', border: 'none', outline: 'none'}}>
-                    <option value="">Quel genre de livres recherchez vous ?</option>
-                    {arrayGenre.map(item => 
-                        <>
-                            <option value= {item.name}>{item.name}</option>
-                        </>
-                    )}
-                </select>
-            </BarFilter>
+                <BarFilter >
+                    <Input
+                        type='text'
+                        placeholder="Cherchez un livre ou un auteur &#128270;"
+                        value= {textInput}
+                        onChange= {e => {setTextInput(e.target.value)}}
+                    />
+                    <select value={textSelect} onChange={e => {setTextSelect(e.target.value)}} style={{borderRadius: '30px', cursor: 'pointer', border: 'none', outline: 'none'}}>
+                        <option value="">Quel genre de livres recherchez vous ?</option>
+                        {arrayGenre.map(item => 
+                            <>
+                                <option value= {item.name}>{item.name}</option>
+                            </>
+                        )}
+                    </select>
+                </BarFilter>
 
-            {textInput.length > 1 ? 
+                {textInput.length > 1 ? 
+                    <Flex>
+                    {filterBooks.reverse().map((item) => {
+                        const livre = state.source.livre[item.id];
+                        return (
+                                    <div onMouseEnter={() => setHover(item.id)} 
+                                            onMouseLeave={() => setHover(-1)}
+                                    >
+                                        {hover === (item.id) ? 
+                                        <BoxHover backgroundImage={media[livre.featured_media].source_url}> 
+                                            <Link color='white' href={livre.link}>
+                                                <Overflow> <b> Résumé : </b> <br/> <br/> <Html2React html={livre.content.rendered} /> </Overflow>
+                                                <Link color='white' textDecoration='underline' href={livre.link}> Voir plus</Link>
+                                            </Link>
+                                        </BoxHover> :
+                                        <Box> 
+                                            <Link href={livre.link}>
+                                                <Image src={media[livre.featured_media].source_url} borderRadius = "20px 20px 0px 0px" />
+                                                <h3> <Html2React html={livre.title.rendered} /> </h3>
+                                                <p> <b> Auteur </b>: <Html2React html={livre.acf.author} /> </p>
+                                                <p> <b> Genre </b>: <Html2React html={genre[livre.genre[0]].name} /></p>   
+                                                {livre.acf.disponible ? 
+                                                    <p>Disponible<span> &#9989; </span> </p> : 
+                                                    <p>Non disponible<span> &#10060; </span> </p>
+                                                }                            
+                                            </Link>
+                                        </Box> 
+                                        }
+                                    </div>
+                        )
+                    })}
+                    </Flex>
+                    
+                : 
                 <Flex>
-                {filterBooks.reverse().map((item) => {
-                    const livre = state.source.livre[item.id];
+                {filterBooksGenre.reverse().map((item) => {
+                    const livre = state.source.livre[item.id]
                     return (
                                 <div onMouseEnter={() => setHover(item.id)} 
                                         onMouseLeave={() => setHover(-1)}
@@ -89,58 +125,27 @@ const Livres = ({state, libraries}) => {
                                         </Link>
                                     </BoxHover> :
                                     <Box> 
-                                        <Link href={livre.link}>
-                                            <Image src={media[livre.featured_media].source_url} borderRadius = "20px 20px 0px 0px" />
-                                            <h3> <Html2React html={livre.title.rendered} /> </h3>
-                                            <p> <b> Auteur </b>: <Html2React html={livre.acf.author} /> </p>
-                                            <p> <b> Genre </b>: <Html2React html={genre[livre.genre[0]].name} /></p>   
-                                            {livre.acf.disponible ? 
-                                                <p>Disponible<span> &#9989; </span> </p> : 
-                                                <p>Non disponible<span> &#10060; </span> </p>
-                                            }                            
-                                        </Link>
-                                    </Box> 
+                                    <Link href={livre.link}>
+                                        <Image src={media[livre.featured_media].source_url} borderRadius = "20px 20px 0px 0px" />
+                                        <h3> <Html2React html={livre.title.rendered} /> </h3>
+                                        <p> <b> Auteur </b>: <Html2React html={livre.acf.author} /> </p>
+                                        <p> <b> Genre </b>: <Html2React html={genre[livre.genre[0]].name} /></p>   
+                                        {livre.acf.disponible ? 
+                                            <p>Disponible<span> &#9989; </span> </p> : 
+                                            <p>Non disponible<span> &#10060; </span> </p>
+                                        }                            
+                                    </Link>
+                                </Box> 
                                     }
                                 </div>
                     )
                 })}
                 </Flex>
-                
-             : 
-             <Flex>
-             {filterBooksGenre.reverse().map((item) => {
-                 const livre = state.source.livre[item.id]
-                 return (
-                             <div onMouseEnter={() => setHover(item.id)} 
-                                     onMouseLeave={() => setHover(-1)}
-                             >
-                                 {hover === (item.id) ? 
-                                 <BoxHover backgroundImage={media[livre.featured_media].source_url}> 
-                                     <Link color='white' href={livre.link}>
-                                         <Overflow> <b> Résumé : </b> <br/> <br/> <Html2React html={livre.content.rendered} /> </Overflow>
-                                         <Link color='white' textDecoration='underline' href={livre.link}> Voir plus</Link>
-                                     </Link>
-                                 </BoxHover> :
-                                 <Box> 
-                                 <Link href={livre.link}>
-                                     <Image src={media[livre.featured_media].source_url} borderRadius = "20px 20px 0px 0px" />
-                                     <h3> <Html2React html={livre.title.rendered} /> </h3>
-                                     <p> <b> Auteur </b>: <Html2React html={livre.acf.author} /> </p>
-                                     <p> <b> Genre </b>: <Html2React html={genre[livre.genre[0]].name} /></p>   
-                                     {livre.acf.disponible ? 
-                                         <p>Disponible<span> &#9989; </span> </p> : 
-                                         <p>Non disponible<span> &#10060; </span> </p>
-                                     }                            
-                                 </Link>
-                             </Box> 
-                                 }
-                             </div>
-                 )
-             })}
-             </Flex>
-            }
-            {filterBooks.length < 1 && <p> Aucun résultat pour la recherche : <b> {textInput} </b> </p>}
-        </Container>
+                }
+                {filterBooks.length < 1 && <p> Aucun résultat pour la recherche : <b> {textInput} </b> </p>}
+            </Container>
+            <Footer/>
+        </>
     )     
 };
 

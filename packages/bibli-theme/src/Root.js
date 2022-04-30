@@ -9,6 +9,8 @@ import { useEffect } from 'react'
 import Livre from "./pages/Livre"
 import Cd from "./pages/Cd"
 import Dvd from "./pages/Dvd"
+import Contact from "./pages/Contact"
+import CircleLoader from "./components/CircleLoader"
 
 
 const Root = ({ state, actions }) => {
@@ -22,6 +24,7 @@ const Root = ({ state, actions }) => {
       await actions.source.fetch('/livres')
       await actions.source.fetch('/cds')
       await actions.source.fetch('/dvds')
+      await actions.source.fetch('/forms')
     }
     
   return (
@@ -37,7 +40,7 @@ const Root = ({ state, actions }) => {
             }
       `}/>
           <NavBar/>
-              { data.isFetching && <p> Loading... </p>}
+              { data.isFetching && <CircleLoader/>}
               { data.isHome && <Acceuil/>}
               { data.isLivreArchive && <Livres/>}
               {data.isLivre && <Livre/>}
@@ -45,6 +48,7 @@ const Root = ({ state, actions }) => {
               {data.isDvd && <Dvd/>}
               { data.isCdArchive && <Cds/>}
               {data.isCd && <Cd/>}
+              {data.isFormArchive && <Contact/>}
               {data.isError && <p> 404 not Found </p>}
     </>
 

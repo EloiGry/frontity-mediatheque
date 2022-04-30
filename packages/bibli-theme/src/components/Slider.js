@@ -10,7 +10,11 @@ const Slider = ({state}) => {
     const [page, setPage] = useState(0)
     let arrayImage = []
     const attachment = Object.keys(state.source.attachment).map(Number)
-    attachment.forEach(item => arrayImage.push(state.source.attachment[item].source_url))
+    attachment.forEach(item => {
+        if(arrayImage.length < 5) {
+            arrayImage.push(state.source.attachment[item].source_url)
+        }
+    } )
 
 
     const handlePlusPage = (num) => {
@@ -31,10 +35,10 @@ const Slider = ({state}) => {
 
     return (
         <Background> 
-                <h2 style={{textAlign: 'center', color: 'white'}}> Nos recommendations du mois </h2>
+                <h2 style={{textAlign: 'center', color: 'white', fontSize:'35px', fontStyle: 'italic'}}> Nos recommendations du mois </h2>
                 <Display> 
                     <motion.button
-                        whileHover={{scale : 1.2, transition : { duration : 0.5}}}
+                        whileHover={{scale : 1.3, color : 'white' }}
                         whileTap={{scale:0.9}}
                         onClick={() => handleMinusPage(-1)}
                         style={{background : 'none', cursor: 'pointer'}}
@@ -78,7 +82,7 @@ const Slider = ({state}) => {
 const Background = styled.div`
 background: rgb(255,255,255);
 background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(38,70,83,1) 70%);
-height: 80vh;`
+height: 85vh;`
 
 const Display = styled.div`
 display : flex;

@@ -9,6 +9,7 @@ import BoxHover from '../components/BoxHover';
 import {useState} from 'react'
 import { motion } from "framer-motion"
 import Input from '../components/Input';
+import Footer from '../components/Footer';
 
 
 const containerVariants = {
@@ -46,43 +47,75 @@ const Dvds = ({state, libraries}) => {
     )
 
     return (
-        <Container 
-        as={motion.div}
-        variants={containerVariants}
-        initial='initial'
-        animate='animate'>
-            <h2> Nos DVDs </h2>
-            <BarFilter> 
-            <Input
-            type='text'
-            placeholder="Cherchez un DVD ou un réalisateur &#128270;"
-            value= {textInput}
-            onChange= {e => {setTextInput(e.target.value)}}
-            />
-            <select value={textSelect} onChange={e => {setTextSelect(e.target.value)}} style={{borderRadius: '30px', cursor: 'pointer', border: 'none', outline: 'none'}}>
-                    <option value="">Quel genre de films souhaitez vous voir ?</option>
-                    {arrayGenre.map(item => 
-                        <>
-                            <option value= {item.name}>{item.name}</option>
-                        </>
-                    )}
-                </select>
-            </BarFilter>
-            {textInput.length > 1 ?
-                <Flex>
-                {filterDvds.reverse().map(item => {
-                    const dvd = state.source.dvd[item.id]
-                    return (
-                        <div onMouseEnter={() => setHover(item.id)} 
+        <>
+            <Container 
+            as={motion.div}
+            variants={containerVariants}
+            initial='initial'
+            animate='animate'>
+                <h2> Nos DVDs </h2>
+                <BarFilter> 
+                <Input
+                type='text'
+                placeholder="Cherchez un DVD ou un réalisateur &#128270;"
+                value= {textInput}
+                onChange= {e => {setTextInput(e.target.value)}}
+                />
+                <select value={textSelect} onChange={e => {setTextSelect(e.target.value)}} style={{borderRadius: '30px', cursor: 'pointer', border: 'none', outline: 'none'}}>
+                        <option value="">Quel genre de films souhaitez vous voir ?</option>
+                        {arrayGenre.map(item => 
+                            <>
+                                <option value= {item.name}>{item.name}</option>
+                            </>
+                        )}
+                    </select>
+                </BarFilter>
+                {textInput.length > 1 ?
+                    <Flex>
+                    {filterDvds.reverse().map(item => {
+                        const dvd = state.source.dvd[item.id]
+                        return (
+                            <div onMouseEnter={() => setHover(item.id)} 
+                                onMouseLeave={() => setHover(-1)}>
+                                {hover === (item.id) ? 
+                                    <BoxHover backgroundImage={media[dvd.featured_media].source_url}> 
+                                        <Link color='white' href={dvd.link}>
+                                            <Overflow> <b> Résumé : </b> <br/> <br/> <Html2React html={dvd.content.rendered} /> </Overflow>
+                                            <Link color='white' textDecoration='underline' href={dvd.link}> Voir plus</Link>
+                                        </Link>
+                                    </BoxHover> :
+                                    <Box> 
+                                        <Link href={dvd.link}>
+                                            <Image src={media[dvd.featured_media].source_url} borderRadius = "20px 20px 0px 0px" />
+                                            <h3> <Html2React html={dvd.title.rendered} /> </h3>
+                                            <p> <b> Réalisateur </b>: <Html2React html={dvd.acf.author} /> </p>
+                                            <p> <b> Genre </b>: <Html2React html={genre[dvd.categorie[0]].name} /></p> 
+                                            {dvd.acf.disponible ? 
+                                                <p>Disponible <span> &#9989; </span> </p> : 
+                                                <p>Non disponible <span> &#10060; </span> </p>
+                                            }                                 
+                                        </Link>
+                                    </Box> 
+                                }
+                            </div>
+                        )
+                    })}
+                    </Flex>
+                    : 
+                    <Flex>
+                    {filterDvdsGenre.reverse().map(item => {
+                        const dvd = state.source.dvd[item.id]
+                        return (
+                            <div onMouseEnter={() => setHover(item.id)} 
                             onMouseLeave={() => setHover(-1)}>
-                            {hover === (item.id) ? 
-                                <BoxHover backgroundImage={media[dvd.featured_media].source_url}> 
-                                    <Link color='white' href={dvd.link}>
-                                        <Overflow> <b> Résumé : </b> <br/> <br/> <Html2React html={dvd.content.rendered} /> </Overflow>
-                                        <Link color='white' textDecoration='underline' href={dvd.link}> Voir plus</Link>
-                                    </Link>
-                                </BoxHover> :
-                                <Box> 
+                                {hover === (item.id) ? 
+                                    <BoxHover backgroundImage={media[dvd.featured_media].source_url}> 
+                                        <Link color='white' href={dvd.link}>
+                                            <Overflow> <b> Résumé : </b> <br/> <br/> <Html2React html={dvd.content.rendered} /> </Overflow>
+                                            <Link color='white' textDecoration='underline' href={dvd.link}> Voir plus</Link>
+                                        </Link>
+                                    </BoxHover> :
+                                    <Box> 
                                     <Link href={dvd.link}>
                                         <Image src={media[dvd.featured_media].source_url} borderRadius = "20px 20px 0px 0px" />
                                         <h3> <Html2React html={dvd.title.rendered} /> </h3>
@@ -94,45 +127,16 @@ const Dvds = ({state, libraries}) => {
                                         }                                 
                                     </Link>
                                 </Box> 
-                            }
-                        </div>
-                    )
-                })}
+                                    }
+                            </div>
+                        )
+                    })}
                 </Flex>
-                : 
-                <Flex>
-                {filterDvdsGenre.reverse().map(item => {
-                    const dvd = state.source.dvd[item.id]
-                    return (
-                        <div onMouseEnter={() => setHover(item.id)} 
-                        onMouseLeave={() => setHover(-1)}>
-                            {hover === (item.id) ? 
-                                <BoxHover backgroundImage={media[dvd.featured_media].source_url}> 
-                                    <Link color='white' href={dvd.link}>
-                                        <Overflow> <b> Résumé : </b> <br/> <br/> <Html2React html={dvd.content.rendered} /> </Overflow>
-                                        <Link color='white' textDecoration='underline' href={dvd.link}> Voir plus</Link>
-                                    </Link>
-                                </BoxHover> :
-                                <Box> 
-                                <Link href={dvd.link}>
-                                    <Image src={media[dvd.featured_media].source_url} borderRadius = "20px 20px 0px 0px" />
-                                    <h3> <Html2React html={dvd.title.rendered} /> </h3>
-                                    <p> <b> Réalisateur </b>: <Html2React html={dvd.acf.author} /> </p>
-                                    <p> <b> Genre </b>: <Html2React html={genre[dvd.categorie[0]].name} /></p> 
-                                    {dvd.acf.disponible ? 
-                                        <p>Disponible <span> &#9989; </span> </p> : 
-                                        <p>Non disponible <span> &#10060; </span> </p>
-                                    }                                 
-                                </Link>
-                            </Box> 
-                                }
-                        </div>
-                    )
-                })}
-            </Flex>
-            }  
-            {filterDvds.length < 1 && <p> Aucun résultat pour la recherche : <b> {textInput} </b> </p>}
-        </Container>
+                }  
+                {filterDvds.length < 1 && <p> Aucun résultat pour la recherche : <b> {textInput} </b> </p>}
+            </Container>
+            <Footer/>
+        </>
         
     );
 };

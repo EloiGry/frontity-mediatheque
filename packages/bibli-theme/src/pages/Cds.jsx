@@ -9,6 +9,7 @@ import BoxHover from '../components/BoxHover';
 import {useState} from 'react'
 import { motion } from "framer-motion"
 import Input from '../components/Input';
+import Footer from '../components/Footer';
 
 
 const containerVariants = {
@@ -46,6 +47,7 @@ const Cds = ({state, libraries}) => {
     )
 
     return (
+        <>
         <Container 
             as={motion.div}
             variants={containerVariants}
@@ -135,6 +137,8 @@ const Cds = ({state, libraries}) => {
             }
             {filterCds.length < 1 && <p> Aucun résultat pour la recherche : <b> {textInput} </b> </p>}
         </Container>
+        <Footer/>
+        </>
         
     );
 };

@@ -7,7 +7,8 @@ import Slider from '../components/Slider';
 import { Container } from '../components/Container';
 import Footer from '../components/Footer';
 import { useInView } from 'react-intersection-observer';
-import {useEffect} from 'react'
+import {useEffect, useState} from 'react'
+import CircleLoader from '../components/CircleLoader';
 
 const containerVariants = {
     initial: {
@@ -37,6 +38,7 @@ const IconVariants = {
 
 
 const Acceuil = ({state, libraries}) => {
+    const [value, setValue] = useState([])
     const controls = useAnimation();
     const [ref, inView] = useInView()
 
@@ -46,19 +48,32 @@ const Acceuil = ({state, libraries}) => {
         }
       }, [controls, inView]);
 
+      useEffect(() => {
+        if (state.source.actualites) {
+
+            const actu = Object.values(state.source.actualites)
+            setValue(actu)
+        }
+
+      }, [state.source.actualites])
+      
+      
+
     let arrayImage = []
     const attachment = Object.keys(state.source.attachment).map(Number)
-    attachment.forEach(item => arrayImage.push(state.source.attachment[item].source_url))
+    attachment.forEach(item => {
+        if (arrayImage.length < 10) {
+            arrayImage.push(state.source.attachment[item].source_url)
+        }
+        })
     const Html2React = libraries.html2react.Component
     
     
     if (!state.source.actualites) {
         return (
-            <p>Loading... </p>
+            <CircleLoader/>
         )
     }
-
-    const value = Object.values(state.source.actualites)
     console.log(value);
 
 
@@ -70,7 +85,7 @@ const Acceuil = ({state, libraries}) => {
         >
             <Slider/>
             <Container> 
-            <h2 style={{margin: '5px', color :"#121212"}}>
+            <h2 style={{margin: '20px 0px', color :"#121212", fontSize:'35px', fontStyle: 'italic'}}>
                 Les actualités de la semaine  
             </h2>
                 <Grid 
@@ -103,7 +118,7 @@ const Acceuil = ({state, libraries}) => {
                 </Grid>
             </Container>
             <Flex> 
-                <h3> Nos nouveautés </h3>
+                <h3 style={{fontSize:'35px', fontStyle: 'italic'}}> Nos nouveautés </h3>
                 <TopIcon>
                     &#187; 
                 </TopIcon>
@@ -172,6 +187,8 @@ color: #293241;
 `
 const TopIcon = styled.div`
 font-weight: 700;
+font-size: 35px;
+font-style: italic;
 `
 
 const Grid = styled.div`
