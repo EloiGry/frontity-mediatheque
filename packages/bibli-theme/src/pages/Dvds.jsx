@@ -76,7 +76,8 @@ const Dvds = ({state, libraries}) => {
                         const dvd = state.source.dvd[item.id]
                         return (
                             <div onMouseEnter={() => setHover(item.id)} 
-                                onMouseLeave={() => setHover(-1)}>
+                                onMouseLeave={() => setHover(-1)}
+                                key={item.id}>
                                 {hover === (item.id) ? 
                                     <BoxHover backgroundImage={media[dvd.featured_media].source_url}> 
                                         <Link color='white' href={dvd.link}>
@@ -107,7 +108,8 @@ const Dvds = ({state, libraries}) => {
                         const dvd = state.source.dvd[item.id]
                         return (
                             <div onMouseEnter={() => setHover(item.id)} 
-                            onMouseLeave={() => setHover(-1)}>
+                            onMouseLeave={() => setHover(-1)}
+                            key={item.id}>
                                 {hover === (item.id) ? 
                                     <BoxHover backgroundImage={media[dvd.featured_media].source_url}> 
                                         <Link color='white' href={dvd.link}>

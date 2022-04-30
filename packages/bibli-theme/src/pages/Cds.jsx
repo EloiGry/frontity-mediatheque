@@ -78,7 +78,8 @@ const Cds = ({state, libraries}) => {
                     const cd = state.source.cd[item.id]
                     return (
                         <div onMouseEnter={() => setHover(item.id)} 
-                            onMouseLeave={() => setHover(-1)}>
+                            onMouseLeave={() => setHover(-1)}
+                            key={item.id}>
                             {hover === (item.id) ? 
                                 <BoxHover backgroundImage={media[cd.featured_media].source_url}  width='250px' height='300px'> 
                                     <Link color='white' href={livre.link}>
@@ -109,7 +110,8 @@ const Cds = ({state, libraries}) => {
                     const cd = state.source.cd[item.id]
                     return (
                         <div onMouseEnter={() => setHover(item.id)} 
-                        onMouseLeave={() => setHover(-1)}>
+                        onMouseLeave={() => setHover(-1)}
+                        key={item.id}>
                             {hover === (item.id) ? 
                                 <BoxHover backgroundImage={media[cd.featured_media].source_url}  width='250px' height='300px'> 
                                     <Link color='white' href={cd.link}>

@@ -83,6 +83,7 @@ const Livres = ({state, libraries}) => {
                         return (
                                     <div onMouseEnter={() => setHover(item.id)} 
                                             onMouseLeave={() => setHover(-1)}
+                                            key={item.id}
                                     >
                                         {hover === (item.id) ? 
                                         <BoxHover backgroundImage={media[livre.featured_media].source_url}> 
@@ -116,6 +117,7 @@ const Livres = ({state, libraries}) => {
                     return (
                                 <div onMouseEnter={() => setHover(item.id)} 
                                         onMouseLeave={() => setHover(-1)}
+                                        key={item.id}
                                 >
                                     {hover === (item.id) ? 
                                     <BoxHover backgroundImage={media[livre.featured_media].source_url}> 

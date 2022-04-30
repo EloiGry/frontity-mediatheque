@@ -133,11 +133,11 @@ const Acceuil = ({state, libraries}) => {
                     > 
                        {arrayImage.map(image => {
                            return (
-                               <>
+                               <div key={image}>
                                 <Item>
                                         <Image src={image} alt="image" height="300px" borderRadius='20px'/>
                                 </Item>
-                               </>
+                               </div>
                                 
                                 )
                             })} 
