@@ -69,9 +69,7 @@ const Livres = ({state, libraries}) => {
                     <select value={textSelect} onChange={e => {setTextSelect(e.target.value)}} style={{borderRadius: '30px', cursor: 'pointer', border: 'none', outline: 'none'}}>
                         <option value="">Quel genre de livres recherchez vous ?</option>
                         {arrayGenre.map(item => 
-                            <>
-                                <option value= {item.name}>{item.name}</option>
-                            </>
+                                <option key={item.id} value= {item.name}>{item.name}</option>
                         )}
                     </select>
                 </BarFilter>
@@ -89,7 +87,7 @@ const Livres = ({state, libraries}) => {
                                         <BoxHover backgroundImage={media[livre.featured_media].source_url}> 
                                             <Link color='white' href={livre.link}>
                                                 <Overflow> <b> Résumé : </b> <br/> <br/> <Html2React html={livre.content.rendered} /> </Overflow>
-                                                <Link color='white' textDecoration='underline' href={livre.link}> Voir plus</Link>
+                                                <p style={{textDecoration:'underline'}}> Voir plus</p>
                                             </Link>
                                         </BoxHover> :
                                         <Box> 
@@ -123,7 +121,7 @@ const Livres = ({state, libraries}) => {
                                     <BoxHover backgroundImage={media[livre.featured_media].source_url}> 
                                         <Link color='white' href={livre.link}>
                                             <Overflow> <b> Résumé : </b> <br/> <br/> <Html2React html={livre.content.rendered} /> </Overflow>
-                                            <Link color='white' textDecoration='underline' href={livre.link}> Voir plus</Link>
+                                            <p style={{textDecoration:'underline'}}> Voir plus</p>
                                         </Link>
                                     </BoxHover> :
                                     <Box> 
@@ -158,7 +156,7 @@ grid-template-rows: 1fr;
 grid-column-gap: 30px;
 grid-row-gap: 0px;`
 
-const Overflow = styled.p`
+const Overflow = styled.span`
 font-size : 18px;
 line-height: normal;
 display: -webkit-box;

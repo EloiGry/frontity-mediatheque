@@ -65,9 +65,7 @@ const Cds = ({state, libraries}) => {
                 <select value={textSelect} onChange={e => {setTextSelect(e.target.value)}} style={{borderRadius: '30px', cursor: 'pointer', border: 'none', outline: 'none'}}>
                         <option value="">Quel genre musical recherchez vous ?</option>
                         {arrayGenre.map(item => 
-                            <>
-                                <option value= {item.name}>{item.name}</option>
-                            </>
+                                <option key={item.id} value= {item.name}>{item.name}</option>
                         )}
                 </select>
             </BarFilter>
@@ -84,7 +82,7 @@ const Cds = ({state, libraries}) => {
                                 <BoxHover backgroundImage={media[cd.featured_media].source_url}  width='250px' height='300px'> 
                                     <Link color='white' href={livre.link}>
                                         <Overflow> <b> Résumé : </b> <br/> <br/> <Html2React html={cd.content.rendered} /> </Overflow>
-                                        <Link color='white' textDecoration='underline' href={livre.link}> Voir plus</Link>
+                                        <p style={{textDecoration:'underline'}} > Voir plus</p>
                                     </Link>
                                 </BoxHover> :
                                 <Box width='250px' height='300px'> 
@@ -116,7 +114,7 @@ const Cds = ({state, libraries}) => {
                                 <BoxHover backgroundImage={media[cd.featured_media].source_url}  width='250px' height='300px'> 
                                     <Link color='white' href={cd.link}>
                                         <Overflow> <b> Résumé : </b> <br/> <br/> <Html2React html={cd.content.rendered} /> </Overflow>
-                                        <Link color='white' textDecoration='underline' href={cd.link}> Voir plus</Link>
+                                        <p style={{textDecoration:'underline'}}> Voir plus</p>
                                     </Link>
                                 </BoxHover> :
                                 <Box width='250px' height='300px'> 
@@ -152,7 +150,7 @@ grid-template-rows: 1fr;
 grid-column-gap: 30px;
 grid-row-gap: 0px;`
 
-const Overflow = styled.p`
+const Overflow = styled.span`
 font-size : 18px;
 line-height: normal;
 display: -webkit-box;

@@ -43,14 +43,14 @@ const Cd = ({state, libraries}) => {
                             <h1 style={{margin: '10px'}}> <Html2React html={post.title.rendered}/> </h1>
                             <h4 style={{margin: '10px'}}> Auteur : <Html2React html={post.acf.author}/></h4>
                             <h4 style={{margin: '10px'}}> Genre : <Html2React html={state.source.style[post.style[0]].name}/> </h4>
-                            <p style={{margin: '10px'}}> <b> Détails </b>: <Html2React html={post.excerpt.rendered}/> </p> 
+                            <div style={{margin: '10px'}}> <b> Détails </b>: <Html2React html={post.excerpt.rendered}/> </div> 
                             {post.acf.disponible ? 
-                                <p> <b> Exemplaire(s) disponible(s)</b> : {post.acf.exemplaire} <span> &#9989; </span> </p> : 
-                                <p> <b> Exemplaire(s) disponible(s)</b> : {post.acf.exemplaire} <span> &#10060; </span> </p>
+                                <div> <b> Exemplaire(s) disponible(s)</b> : {post.acf.exemplaire} <span> &#9989; </span> </div> : 
+                                <div> <b> Exemplaire(s) disponible(s)</b> : {post.acf.exemplaire} <span> &#10060; </span> </div>
                             }                            
                         </div>
                     </FlexCd>
-                    <p style={{margin: "0px 70px"}}> <b> Résumé : </b> <Html2React html={post.content.rendered}/></p>
+                    <div style={{margin: "0px 70px"}}> <b> Résumé : </b> <Html2React html={post.content.rendered}/></div>
                     
                     
                     

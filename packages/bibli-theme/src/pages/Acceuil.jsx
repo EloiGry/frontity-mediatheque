@@ -99,8 +99,9 @@ const Acceuil = ({state, libraries}) => {
                   hidden: { opacity: 0, x: -200}
                 }}>
                     {value.map(item => {
+                        console.log("item", item);
                         return (
-                            <BoxLayout>
+                            <BoxLayout key={item.id}>
                                 <Padding>
                                     <h4 style={{margin: '7px'}}> <Html2React html={item.title.rendered} /> </h4>
                                     <div style={{margin: '7px'}}>
@@ -210,7 +211,7 @@ display: flex;
 flex-direction: column;
 align-content: space-between;`
 
-const Overflow = styled.p`
+const Overflow = styled.span`
 font-size : 15px;
 line-height: normal;
 display: -webkit-box;
@@ -223,7 +224,7 @@ const EndBox = styled.div`
 display: flex;
 justify-content: space-between`
 
-const Source = styled.p`
+const Source = styled.span`
 width: 200px;
 white-space: nowrap;
 overflow: hidden;

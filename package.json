@@ -20,7 +20,6 @@
     "@aamodtgroup/frontity-contact-form-7": "^0.2.14",
     "@frontity/core": "^1.15.1",
     "@frontity/html2react": "^1.7.0",
-    "@frontity/mars-theme": "./packages/mars-theme",
     "@frontity/tiny-router": "^1.4.4",
     "@frontity/wp-source": "^1.11.7",
     "bibli-theme": "file:packages/bibli-theme",
