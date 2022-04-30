@@ -18,6 +18,7 @@ const Root = ({ state, actions }) => {
     }, [])
 
     const fetching = async () => {
+      await actions.source.fetch('/actualites')
       await actions.source.fetch('/livres')
       await actions.source.fetch('/cds')
       await actions.source.fetch('/dvds')
@@ -44,7 +45,7 @@ const Root = ({ state, actions }) => {
               {data.isDvd && <Dvd/>}
               { data.isCdArchive && <Cds/>}
               {data.isCd && <Cd/>}
-              { data.isError && <p> 404 not Found </p>}
+              {data.isError && <p> 404 not Found </p>}
     </>
 
   )

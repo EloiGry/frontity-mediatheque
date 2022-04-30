@@ -12,6 +12,7 @@ const NavBar = ({state}) => {
             <Link href='/dvds' color='white' margin="0px 10px" fontSize="20px"> DVDs </Link>
             <Link href='/cds' color='white' margin="0px 10px" fontSize="20px"> CDs </Link>
         </Menu>
+
     );
 };
 
@@ -20,6 +21,7 @@ display : flex;
 justify-content : center;
 align-items : center;
 background-color : #264653;
-color : white;`
+color : white;
+height: 20vh;`
 
 export default connect(NavBar);

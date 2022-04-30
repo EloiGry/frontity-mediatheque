@@ -164,4 +164,5 @@ const BarFilter = styled.div`
 display : flex;
 justify-content : space-around;`
 
+
 export default connect(Livres);

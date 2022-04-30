@@ -1,12 +1,26 @@
 import React from 'react';
 import { connect } from 'frontity';
-import { motion } from 'framer-motion';
+import { motion, useAnimation } from 'framer-motion';
 import { styled } from 'frontity';
 import Image from '../components/Image';
 import Slider from '../components/Slider';
-import Actualites from '../components/Actualites';
+import { Container } from '../components/Container';
+import Footer from '../components/Footer';
+import { useInView } from 'react-intersection-observer';
+import {useEffect} from 'react'
 
-
+const containerVariants = {
+    initial: {
+        opacity: 0,
+    },
+    animate: {
+        opacity : 1,
+        transition : {
+            duration: 0.2,
+            ease: 'easeOut'
+        }
+    }
+}
 
 const IconVariants = {
     initial: {
@@ -22,16 +36,72 @@ const IconVariants = {
 }
 
 
-const Acceuil = ({state}) => {
+const Acceuil = ({state, libraries}) => {
+    const controls = useAnimation();
+    const [ref, inView] = useInView()
+
+    useEffect(() => {
+        if (inView) {
+          controls.start("visible");
+        }
+      }, [controls, inView]);
+
     let arrayImage = []
     const attachment = Object.keys(state.source.attachment).map(Number)
     attachment.forEach(item => arrayImage.push(state.source.attachment[item].source_url))
+    const Html2React = libraries.html2react.Component
+    
+    
+    if (!state.source.actualites) {
+        return (
+            <p>Loading... </p>
+        )
+    }
+
+    const value = Object.values(state.source.actualites)
+    console.log(value);
+
 
     return (
-        <>
+        <motion.div
+            variants={containerVariants}
+            initial='initial'
+            animate='animate'
+        >
             <Slider/>
-            <Actualites/>
-
+            <Container> 
+            <h2 style={{margin: '5px', color :"#121212"}}>
+                Les actualités de la semaine  
+            </h2>
+                <Grid 
+                as={motion.div}
+                ref={ref}
+                animate={controls}
+                initial="hidden"
+                transition={{ duration: 0.5 }}
+                variants={{
+                  visible: { opacity: 1, x:0 },
+                  hidden: { opacity: 0, x: -200}
+                }}>
+                    {value.map(item => {
+                        return (
+                            <BoxLayout>
+                                <Padding>
+                                    <h4 style={{margin: '7px'}}> <Html2React html={item.title.rendered} /> </h4>
+                                    <div style={{margin: '7px'}}>
+                                        <Overflow> <Html2React html={item.content.rendered}/> </Overflow>
+                                        <a textDecoration='underline' href={item.acf.lien}> Voir plus</a>
+                                    </div>
+                                    <EndBox style={{margin: '7px'}}>
+                                        <Source> Lien :<a href={item.acf.lien} target="_blank">  <Html2React html={item.acf.lien}/> </a></Source>
+                                        <Source> Source : <i> <Html2React html={item.acf.journal}/></i> </Source>
+                                    </EndBox>
+                                </Padding>
+                            </BoxLayout>
+                        )
+                    })}
+                </Grid>
+            </Container>
             <Flex> 
                 <h3> Nos nouveautés </h3>
                 <TopIcon>
@@ -65,8 +135,9 @@ const Acceuil = ({state}) => {
                     >
                              &#187; </Icon>
                 </Carousel>
+                <Footer/>
                 
-        </>
+        </motion.div>
     );
 };
 
@@ -77,6 +148,8 @@ const Carousel = styled.div`
 cursor: grab;
 overflow: hidden;
 position: relative;
+background: rgb(38,70,83);
+background: linear-gradient(0deg, rgba(38,70,83,1) 0%, rgba(255,255,255,1) 50%);
 `
 const InnerCarousel = styled.div`
 display: flex;
@@ -101,5 +174,42 @@ const TopIcon = styled.div`
 font-weight: 700;
 `
 
+const Grid = styled.div`
+display: grid;
+grid-template-columns: repeat(2, 1fr);
+grid-template-rows: 1fr;
+grid-column-gap: 25px;
+grid-row-gap: 25px;`
+
+const BoxLayout = styled.div`
+background-color: #e9ecef;
+width: 100%;
+height: 300px;
+border-radius: 30px;
+`
+const Padding = styled.div`
+padding: 30px;
+display: flex;
+flex-direction: column;
+align-content: space-between;`
+
+const Overflow = styled.p`
+font-size : 15px;
+line-height: normal;
+display: -webkit-box;
+   -webkit-line-clamp: 6;
+   -webkit-box-orient: vertical;
+   overflow: hidden;
+   text-overflow: ellipsis;`
+
+const EndBox = styled.div`
+display: flex;
+justify-content: space-between`
+
+const Source = styled.p`
+width: 200px;
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis`
 
 export default connect(Acceuil);

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'frontity';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import {useState} from 'react'
 import Image from './Image';
 import { styled } from 'frontity';
@@ -16,21 +16,22 @@ const Slider = ({state}) => {
     const handlePlusPage = (num) => {
         if (page < arrayImage.length-1) {
             setPage(page + num)
+        } else {
+            setPage(0)
         }
     }
 
     const handleMinusPage = (num) => {
         if (page > 0) {
             setPage(page + num)
+        } else {
+            setPage(arrayImage.length-1)
         }
     }
 
     return (
         <Background> 
-            <AnimatePresence
-                initial={false}
-            >
-                <h2 style={{textAlign: 'center'}}> Nos recommendations du mois </h2>
+                <h2 style={{textAlign: 'center', color: 'white'}}> Nos recommendations du mois </h2>
                 <Display> 
                     <motion.button
                         whileHover={{scale : 1.2, transition : { duration : 0.5}}}
@@ -42,11 +43,6 @@ const Slider = ({state}) => {
                     </motion.button>
 
                     <motion.div
-        
-                        initial={{opacity: 0}} 
-                        animate={{opacity: 1}}
-                        exit={{opacity: 0}}
-                        transition={{x : {type: 'spring', stifness:300, damping: 300}, opacity: {duration :1} }}
                         drag="x"
                         dragConstraints={{left:0, right:0}}
                         dragElastic={0.9}
@@ -54,11 +50,19 @@ const Slider = ({state}) => {
                         <Image 
                             src={arrayImage[page]}    
                             height='300px'
+                            as={motion.img}
+                            initial={{opacity: 0}} 
+                            animate={{opacity: 1}}
+                            exit={{opacity: 0}}
+                            transition={{
+                                duration: 0.7,
+                                ease: 'easeOut'
+                            }}
                         />
                     </motion.div>
                     
                     <motion.button
-                        whileHover={{scale : 1.3, transition : { duration : 0.5}, color : 'white'}}
+                        whileHover={{scale : 1.3, color : 'white' }}
                         whileTap={{scale:0.9}}
                         onClick={() => handlePlusPage(1)}
                         style={{background : 'none', cursor: 'pointer'}}
@@ -67,16 +71,14 @@ const Slider = ({state}) => {
                         
                     </motion.button>  
                 </Display>
-            </AnimatePresence>
         </Background>
     );
 };
 
 const Background = styled.div`
-/* background: rgb(156,102,68);
-background: linear-gradient(0deg, rgba(156,102,68,1) 0%, rgba(176,137,104,1) 100%); */
-background-color: transparent;
-height: 70vh;`
+background: rgb(255,255,255);
+background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(38,70,83,1) 70%);
+height: 80vh;`
 
 const Display = styled.div`
 display : flex;

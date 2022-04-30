@@ -48,11 +48,6 @@ const settings = {
               archive: "/livres"
             },
             {
-              type: 'livre',
-              endpoint: 'livre',
-              archive: "/livre"
-            },
-            {
               type: 'cd',
               endpoint: 'cd',
               archive: "/cds"
@@ -61,7 +56,12 @@ const settings = {
               type: 'dvd',
               endpoint: 'dvd',
               archive: "/dvds"
-            }
+            },
+            {
+              type: 'actualites',
+              endpoint: 'actualites',
+              archive: "/actualites"
+            },
           ],
           "taxonomies" : [
             {
