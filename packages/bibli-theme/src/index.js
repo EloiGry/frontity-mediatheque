@@ -1,4 +1,3 @@
-import React from "react"
 import Root from "./Root"
 import link from "@frontity/html2react/processors/link";
 

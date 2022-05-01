@@ -12,7 +12,7 @@ const Footer = () => {
                 <p> <Link href='/livres' color='white' margin="0px 10px"> Livres </Link> </p>
                 <p> <Link href='/dvds' color='white' margin="0px 10px"> DVDs </Link></p>
                 <p> <Link href='/cds' color='white' margin="0px 10px"> CDs </Link></p>
-                <p> <Link href='/contact' color='white' margin="0px 10px"> Contact </Link></p>
+                <p> <Link href='/forms' color='white' margin="0px 10px"> Contact </Link></p>
   
             </div>
             <Horaire/>

@@ -106,7 +106,7 @@ const Acceuil = ({state, libraries}) => {
                                     <h4 style={{margin: '7px'}}> <Html2React html={item.title.rendered} /> </h4>
                                     <div style={{margin: '7px'}}>
                                         <Overflow> <Html2React html={item.content.rendered}/> </Overflow>
-                                        <a textDecoration='underline' href={item.acf.lien}> Voir plus</a>
+                                        <a textDecoration='underline' target="_blank" href={item.acf.lien}> Voir plus</a>
                                     </div>
                                     <EndBox style={{margin: '7px'}}>
                                         <Source> Lien :<a href={item.acf.lien} target="_blank">  <Html2React html={item.acf.lien}/> </a></Source>
