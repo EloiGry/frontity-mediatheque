@@ -74,7 +74,6 @@ const Acceuil = ({state, libraries}) => {
             <CircleLoader/>
         )
     }
-    console.log(value);
 
 
     return (
@@ -99,7 +98,6 @@ const Acceuil = ({state, libraries}) => {
                   hidden: { opacity: 0, x: -200}
                 }}>
                     {value.map(item => {
-                        console.log("item", item);
                         return (
                             <BoxLayout key={item.id}>
                                 <Padding>

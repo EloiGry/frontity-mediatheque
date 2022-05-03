@@ -23,7 +23,6 @@ const Dvd = ({state, libraries}) => {
     const data = state.source.get(state.router.link)
     const post = state.source[data.type][data.id]
     const Html2React = libraries.html2react.Component
-    console.log(post);
     
         return (
             <>
